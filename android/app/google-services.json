@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "627763460494",
+    "project_id": "kokoauth-8dbca",
+    "storage_bucket": "kokoauth-8dbca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627763460494:android:f5e104854632b206670cdf",
+        "android_client_info": {
+          "package_name": "com.example.koko_authetication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627763460494-47bc72rpp312osqv456rk36pil6q4ffa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDeo1GKEuSl2rruq9bkWOpWLRhLnR46tDg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627763460494-47bc72rpp312osqv456rk36pil6q4ffa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
