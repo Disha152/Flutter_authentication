@@ -56,7 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: Column(
                 children: [
                   SizedBox(height: 170),
-                  Text('Hello there',
+                  Text('Hello there!',
                       style: GoogleFonts.greatVibes(
                           fontSize: 24, fontWeight: FontWeight.bold)),
                   SizedBox(
