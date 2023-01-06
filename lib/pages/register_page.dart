@@ -14,30 +14,46 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
 
-  Future signUp() async{
-    try {
-                  await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                    email: emailController.text,
-                    password: passwordController.text,
-                  );
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'weak-password') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('The password provided is too weak.'),
-                      ),
-                    );
-                  } else if (e.code == 'email-already-in-use') {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('The account already exists for that email.'),
-                      ),
-                    );
-                  }
-                } catch (e) {
-                  print(e);
-                }
+  Future signUp() async {
+    if (passwordConfirmed()) {
+      try {
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('The password provided is too weak.'),
+            ),
+          );
+        } else if (e.code == 'email-already-in-use') {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('The account already exists for that email.'),
+            ),
+          );
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
+  bool passwordConfirmed() {
+    if (passwordController.text == confirmPasswordController.text) {
+      return true;
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Passwords do not match.'),
+        ),
+      );
+      return false;
+    }
   }
 
   @override
@@ -66,18 +82,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   SizedBox(height: 25),
                   //Email TextField
                   Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            width: 300,
-                            decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(10),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                            child: TextField(
-                                      controller: emailController,
-                                      decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      hintText: 'Email address',
-                                      hintStyle: TextStyle(color: Colors.grey[400]),
+                      child: TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Email address',
+                          hintStyle: TextStyle(color: Colors.grey[400]),
                         ),
                       )),
                   SizedBox(
@@ -85,59 +101,59 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   //Password TextField
                   Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            width: 300,
-                            decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(10),
-                                                     ),
-                            child: TextField(
-                            controller: passwordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Password',
-                            hintStyle: TextStyle(color: Colors.grey[400]),
-                                                       ),
-                                       )),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Password',
+                          hintStyle: TextStyle(color: Colors.grey[400]),
+                        ),
+                      )),
                   SizedBox(height: 15),
-                   Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20),
-                            width: 300,
-                            decoration: BoxDecoration(
-                            color: Colors.grey[200],
-                            borderRadius: BorderRadius.circular(10),
-                                                     ),
-                            child: TextField(
-                            controller: passwordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: 'Confirm Password',
-                            hintStyle: TextStyle(color: Colors.grey[400]),
-                                                       ),
-                                       )),
+                  Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        controller: confirmPasswordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Confirm Password',
+                          hintStyle: TextStyle(color: Colors.grey[400]),
+                        ),
+                      )),
                   SizedBox(height: 25),
 
                   //Sign In Button
                   GestureDetector(
                     onTap: signUp,
                     child: Container(
-                                     height: 45,
-                                     padding: EdgeInsets.symmetric(horizontal: 20),
-                                     width: 300,
-                                     decoration: BoxDecoration(
-                                     color: Colors.deepPurple,
-                                     borderRadius: BorderRadius.circular(5),
-                                                              ),
-                                     child: Center(
-                                        child: Text(
-                                              'Sign Up',
-                                               style: TextStyle(
-                                               color: Colors.white, fontWeight: FontWeight.bold),
-                                                  ))),
-                                               ),
-                   SizedBox(height: 10),
+                        height: 45,
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        width: 300,
+                        decoration: BoxDecoration(
+                          color: Colors.deepPurple,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Center(
+                            child: Text(
+                          'Sign Up',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        ))),
+                  ),
+                  SizedBox(height: 10),
                 ],
               ),
             ),
