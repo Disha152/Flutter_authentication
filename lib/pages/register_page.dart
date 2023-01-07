@@ -14,6 +14,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final secondNameController = TextEditingController();
+  final ageController = TextEditingController();
 
   Future signUp() async {
     if (passwordConfirmed()) {
@@ -80,6 +83,63 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   const Text('Please register here'),
                   const SizedBox(height: 25),
+                  //First Name TextField
+                  Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'First Name',
+                          hintStyle: TextStyle(color: Colors.grey[400]),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  //Second Name TextField
+                  Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Last Name',
+                          hintStyle: TextStyle(color: Colors.grey[400]),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  //Age TextField
+                  Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Age',
+                          hintStyle: TextStyle(color: Colors.grey[400]),
+                        ),
+                      )),
+                  const SizedBox(
+                    height: 15,
+                  ),
                   //Email TextField
                   Container(
                       padding: const EdgeInsets.symmetric(horizontal: 20),

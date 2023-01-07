@@ -83,9 +83,6 @@ class _LoginPageState extends State<LoginPage> {
                       )),
                   const SizedBox(height: 5),
 
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -94,19 +91,17 @@ class _LoginPageState extends State<LoginPage> {
                                   builder: (context) => const ForgotPasswordPage()));
                         },
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 45,
-                          ),
+                          width:300,
                           child: const Text(
                             'Forgot Password ?',
+                            textAlign: TextAlign.right,
                             style: TextStyle(
                                 color: Colors.deepPurpleAccent,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                   
 
                   const SizedBox(height: 20),
 
