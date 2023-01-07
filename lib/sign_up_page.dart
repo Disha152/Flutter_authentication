@@ -56,6 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     );
                   }
                 } catch (e) {
+                  // ignore: avoid_print
                   print(e);
                 }
               },

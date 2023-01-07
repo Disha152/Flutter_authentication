@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'login_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -38,6 +37,7 @@ class _RegisterPageState extends State<RegisterPage> {
           );
         }
       } catch (e) {
+        // ignore: avoid_print
         print(e);
       }
     }
@@ -62,7 +62,7 @@ class _RegisterPageState extends State<RegisterPage> {
     passwordController.dispose();
     super.dispose();
   }
-
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.grey[300],
@@ -71,18 +71,18 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Center(
               child: Column(
                 children: [
-                  SizedBox(height: 170),
+                  const SizedBox(height: 170),
                   Text('Hello there!',
                       style: GoogleFonts.greatVibes(
                           fontSize: 24, fontWeight: FontWeight.bold)),
-                  SizedBox(
+                  const SizedBox(
                     height: 13,
                   ),
-                  Text('Please register here'),
-                  SizedBox(height: 25),
+                  const Text('Please register here'),
+                  const SizedBox(height: 25),
                   //Email TextField
                   Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       width: 300,
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -96,12 +96,12 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintStyle: TextStyle(color: Colors.grey[400]),
                         ),
                       )),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   //Password TextField
                   Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       width: 300,
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -116,9 +116,9 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintStyle: TextStyle(color: Colors.grey[400]),
                         ),
                       )),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
                   Container(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       width: 300,
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
@@ -133,27 +133,27 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintStyle: TextStyle(color: Colors.grey[400]),
                         ),
                       )),
-                  SizedBox(height: 25),
+                  const SizedBox(height: 25),
 
                   //Sign In Button
                   GestureDetector(
                     onTap: signUp,
                     child: Container(
                         height: 45,
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         width: 300,
                         decoration: BoxDecoration(
                           color: Colors.deepPurple,
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: Center(
+                        child: const Center(
                             child: Text(
                           'Sign Up',
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ))),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
