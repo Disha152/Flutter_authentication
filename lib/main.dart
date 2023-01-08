@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:koko_authetication/auth/main_page.dart';
-import 'firebase_options.dart';
+import 'auth/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 

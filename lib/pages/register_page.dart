@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -18,13 +19,43 @@ class _RegisterPageState extends State<RegisterPage> {
   final secondNameController = TextEditingController();
   final ageController = TextEditingController();
 
-  Future signUp() async {
+  @override
+  void dispose() {
+    firstNameController.dispose();
+    secondNameController.dispose();
+    emailController.dispose();
+    ageController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  Future<void> signUp() async {
+    //authentication user
     if (passwordConfirmed()) {
       try {
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
         );
+        dynamic user = FirebaseAuth.instance.currentUser;
+        if (user == null) {
+          // The user is not signed in, display an error message
+          // ignore: use_build_context_synchronously
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('You must be signed in to add a user'),
+            ),
+          );
+        } else {
+          // The user is signed in, proceed with adding the user to the Firestore collection
+          addUser(
+            firstNameController.text.trim(),
+            secondNameController.text.trim(),
+            emailController.text.trim(),
+            int.parse(ageController.text.trim()),
+          );
+        }
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -46,6 +77,69 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  // add user details to firestore
+  //   addUser(
+  //     firstNameController.text.trim(),
+  //     secondNameController.text.trim(),
+  //     emailController.text.trim(),
+  //     int.parse(ageController.text.trim()),
+  //   );
+  // }
+
+//   FirebaseUser user = await FirebaseAuth.instance.currentUser;
+// if (user == null) {
+//   // The user is not signed in, display an error message
+//   ScaffoldMessenger.of(context).showSnackBar(
+//     SnackBar(
+//       content: Text('You must be signed in to add a user'),
+//     ),
+//   );
+// } else {
+//   // The user is signed in, proceed with adding the user to the Firestore collection
+//   addUser(
+//     firstNameController.text.trim(),
+//     secondNameController.text.trim(),
+//     emailController.text.trim(),
+//     int.parse(ageController.text.trim()),
+//   );
+// }
+
+  // Future<void> addUser(
+  //     String firstName, String secondName, String email, int age) async {
+  //   CollectionReference users = FirebaseFirestore.instance.collection('users');
+  //   return users
+  //       .add({
+  //         'first_name': firstName,
+  //         'second_name': secondName,
+  //         'email': email,
+  //         'age': age,
+  //       })
+  //       // ignore: avoid_print
+  //       .then((value) => print('User Added'))
+  //       // ignore: avoid_print
+  //       .catchError((error) => print('Failed to add user: $error'));
+  // }
+
+  Future<void> addUser(
+      String firstName, String secondName, String email, int age) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    try {
+      await users.add({
+        'first_name': firstName,
+        'second_name': secondName,
+        'email': email,
+        'age': age,
+      });
+    } catch (e) {
+      // Display an error message to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to add user: $e'),
+        ),
+      );
+    }
+  }
+
   bool passwordConfirmed() {
     if (passwordController.text == confirmPasswordController.text) {
       return true;
@@ -59,12 +153,6 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +180,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextField(
-                        controller: emailController,
+                        controller: firstNameController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'First Name',
@@ -111,7 +199,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextField(
-                        controller: emailController,
+                        controller: secondNameController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Last Name',
@@ -130,7 +218,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: TextField(
-                        controller: emailController,
+                        controller: ageController,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: 'Age',

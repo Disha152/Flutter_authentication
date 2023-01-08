@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -14,8 +13,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
   @override
   void dispose() {
-    // ignore: todo
-    // TODO: implement dispose
+
     emailController.dispose();
     super.dispose();
   }
@@ -35,7 +33,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             return AlertDialog(
               title: const Text('Password Reset Email Sent'),
               content: const Text(
-                  'A password reset email has been sent to the specified email address.'),
+                  'A password reset email has been sent to the specified email address. If not recieved till now please check your email password'),
               actions: [
                 TextButton(
                   onPressed: () {
